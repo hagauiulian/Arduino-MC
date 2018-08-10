@@ -1,73 +1,53 @@
-#define PIN_12 12
-#define PIN_11 11
-#define PIN_10 10
-#define PIN_9 9
-#define PIN_8 8
-#define PIN_7 7
-#define PIN_6 6
-#define PIN_3 3
-#define PIN_2 2
-#define SPEAKER 4
+//
+//dacă pinii ar fi consecutivi un cod de genul
+//
+/*
+for(int i = START_PIN; i < END_PIN; i++){
+    digitalWrite(i, .....
+    ....                                  
+}
+*/
+//ar fi suficient
+
+//
+// O Posibilă variantă 
+//  
+#include <assert.h>
+
+#define SPEAKER_PIN 4
+
+//ne definim un vector unde punem pinii
+int ledPins[] = { 2, 3, 6, 7, 8, 9, 10, 11, 12 };
+
+//nr elemente == nr elemente din ledPins (**)
+int soundFrecv[] = { 1000, 800, 900, 100, 900, 800, 100, 1500 } ;
+ 
+  
+int nrLed = sizeof(ledPins)/sizeof(int);
+
+
 void setup() {
-  pinMode(PIN_12, OUTPUT);
-  pinMode(PIN_11, OUTPUT);
-  pinMode(PIN_10, OUTPUT);
-  pinMode(PIN_9, OUTPUT);
-  pinMode(PIN_8, OUTPUT);
-  pinMode(PIN_7, OUTPUT);
-  pinMode(PIN_6, OUTPUT);
-  pinMode(PIN_3, OUTPUT);
-  pinMode(PIN_2, OUTPUT);
-  pinMode(SPEAKER, OUTPUT);
+  //verificare (**) 
+  assert(nrLed == sizeof(soundFrecv)/sizeof(int));
+  
+  for(int i=0; i< nrLed; i++) pinMode(i, OUTPUT);
+  
+  pinMode(SPEAKER_PIN, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(PIN_12, HIGH);
-  tone(SPEAKER, 1000, 90);
-  delay(100);
-  digitalWrite(PIN_11, HIGH);
-  tone(SPEAKER, 800, 90);
-  delay(100);
-  digitalWrite(PIN_10, HIGH);
-  tone(SPEAKER, 900, 90);
-  delay(100);
-  digitalWrite(PIN_9, HIGH);
-  tone(SPEAKER, 1000, 90);
-  delay(100);
-  digitalWrite(PIN_8, HIGH);
-  tone(SPEAKER, 900, 90);
-  delay(100);
-  digitalWrite(PIN_7, HIGH);
-  tone(SPEAKER, 800, 90);
-  delay(100);
-  digitalWrite(PIN_6, HIGH);
-  tone(SPEAKER, 900, 90);
-  delay(100);
-  digitalWrite(PIN_3, HIGH);
-  tone(SPEAKER, 1000, 90);
-  delay(100);
-  digitalWrite(PIN_2, HIGH);
-  tone(SPEAKER, 1500, 90);
+  for(int i=0; i< nrLed; i++){ 
+      digitalWrite(i, HIGH);
+      tone(SPEAKER_PIN, soundFrecv[i], 90);
+      delay(100);
+  }
   
   delay(1000);
-  
-  digitalWrite(PIN_12, LOW);
-  delay(100);
-  digitalWrite(PIN_11, LOW);
-  delay(100);
-  digitalWrite(PIN_10, LOW);
-  delay(100);
-  digitalWrite(PIN_9, LOW);
-  delay(100);
-  digitalWrite(PIN_8, LOW);
-  delay(100);
-  digitalWrite(PIN_7, LOW);
-  delay(100);
-  digitalWrite(PIN_6, LOW);
-  delay(100);
-  digitalWrite(PIN_3, LOW);
-  delay(100);
-  digitalWrite(PIN_2, LOW);
+
+  for(int i=0; i< nrLed; i++){ 
+    digitalWrite(i, LOW);
+    delay(100);  
+  }
   
   delay(1000);
 
